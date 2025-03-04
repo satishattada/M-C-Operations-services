@@ -1,5 +1,26 @@
 import { Document } from 'mongoose';
 
+export interface Month {
+  jan: string;
+  feb: string;
+  mar: string;
+  apr: string;
+  may: string;
+  jun: string;
+  jul: string;
+  aug: string;
+  sep: string;
+  oct: string;
+  nov: string;
+  dec: string;
+}
+
+export interface MilestoneAmount {
+  revision: number;
+  year: number;
+  month: Month;
+}
+
 export interface IContract extends Document {
   readonly bpSubPortfolio: string;
   readonly contractName: string;
@@ -25,4 +46,5 @@ export interface IContract extends Document {
   readonly linkedDPSNumber: string;
   readonly infosysContractType: string;
   readonly totalSoWWorkers: string;
+  readonly milestoneAmount: MilestoneAmount[];
 }

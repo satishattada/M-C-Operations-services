@@ -38,15 +38,15 @@ export class ContractManagementController {
     }
   }
 
-  @Put('/:id')
+  @Put('/:contractFGID')
   async updateContract(
     @Res() response,
-    @Param('id') contractId: string,
+    @Param('contractFGID') contractFGID: string,
     @Body() updateContractDto: UpdateContractDto,
   ) {
     try {
-      const existingContract = await this.contractService.updateContract(
-        contractId,
+      const existingContract = await this.contractService.updateContractByFGID(
+        contractFGID,
         updateContractDto,
       );
       return response.status(HttpStatus.OK).json({
@@ -54,7 +54,11 @@ export class ContractManagementController {
         existingContract,
       });
     } catch (err) {
-      return response.status(err.status).json(err.response);
+      return response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+        statusCode: err.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        message: err.message || 'Internal server error',
+        error: err.name || 'Error',
+      });
     }
   }
 
@@ -67,7 +71,11 @@ export class ContractManagementController {
         contractData,
       });
     } catch (err) {
-      return response.status(err.status).json(err.response);
+      return response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+        statusCode: err.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        message: err.message || 'Internal server error',
+        error: err.name || 'Error',
+      });
     }
   }
 
@@ -81,7 +89,11 @@ export class ContractManagementController {
         existingContract,
       });
     } catch (err) {
-      return response.status(err.status).json(err.response);
+      return response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+        statusCode: err.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        message: err.message || 'Internal server error',
+        error: err.name || 'Error',
+      });
     }
   }
 
@@ -95,7 +107,11 @@ export class ContractManagementController {
         deletedContract,
       });
     } catch (err) {
-      return response.status(err.status).json(err.response);
+      return response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+        statusCode: err.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        message: err.message || 'Internal server error',
+        error: err.name || 'Error',
+      });
     }
   }
 }

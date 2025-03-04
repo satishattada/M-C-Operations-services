@@ -18,17 +18,19 @@ export class ContractManagementService {
     return newContract.save();
   }
 
-  async updateContract(
-    contractId: string,
+  async updateContractByFGID(
+    contractFGID: string,
     updateContractDto: UpdateContractDto,
   ): Promise<IContract> {
-    const existingContract = await this.contractModel.findByIdAndUpdate(
-      contractId,
+    const existingContract = await this.contractModel.findOneAndUpdate(
+      { contractFGID },
       updateContractDto,
       { new: true },
     );
     if (!existingContract) {
-      throw new NotFoundException(`Contract #${contractId} not found`);
+      throw new NotFoundException(
+        `Contract with FGID #${contractFGID} not found`,
+      );
     }
     return existingContract;
   }

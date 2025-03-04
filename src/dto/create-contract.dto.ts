@@ -1,4 +1,55 @@
-import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
+
+class MonthDto {
+  @IsString()
+  jan: string;
+
+  @IsString()
+  feb: string;
+
+  @IsString()
+  mar: string;
+
+  @IsString()
+  apr: string;
+
+  @IsString()
+  may: string;
+
+  @IsString()
+  jun: string;
+
+  @IsString()
+  jul: string;
+
+  @IsString()
+  aug: string;
+
+  @IsString()
+  sep: string;
+
+  @IsString()
+  oct: string;
+
+  @IsString()
+  nov: string;
+
+  @IsString()
+  dec: string;
+}
+
+class MilestoneAmountDto {
+  @IsNumber()
+  revision: number;
+
+  @IsNumber()
+  year: number;
+
+  @ValidateNested()
+  @Type(() => MonthDto)
+  month: MonthDto;
+}
 
 export class CreateContractDto {
   @IsString()
@@ -90,4 +141,8 @@ export class CreateContractDto {
   @IsString()
   @IsNotEmpty()
   readonly totalSoWWorkers: string;
+
+  @ValidateNested({ each: true })
+  @Type(() => MilestoneAmountDto)
+  readonly milestoneAmount: MilestoneAmountDto[];
 }
